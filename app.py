@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import graphviz
+import os
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.neural_network import MLPRegressor
@@ -156,7 +157,9 @@ st.title("🌦️ Weather Forecasting Prediction System")
 st.markdown("### Framework: Optimized BPSO Feature Selection & BPNN Neural Network")
 st.write("---")
 
-CSV_PATH = r"C:\Users\USER\Desktop\Weather Forecasting Prediction System\weather_prediction_dataset2.csv"
+# --- DYNAMIC CLOUD/LOCAL PATH ENGINE ---
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CSV_PATH = os.path.join(BASE_DIR, "weather_prediction_dataset2.csv")
 
 @st.cache_data
 def load_and_prepare_data(path):
@@ -166,7 +169,7 @@ def load_and_prepare_data(path):
 try:
     df_raw = load_and_prepare_data(CSV_PATH)
 except Exception as e:
-    st.error(f"Could not load local file path. Verify dataset inside: `{CSV_PATH}`")
+    st.error(f"⚠️ Dataset File Missing! Ensure `weather_prediction_dataset2.csv` is inside the folder: `{BASE_DIR}`")
     st.stop()
 
 # --- SIDEBAR CONFIGURATION CONTROLS ---
@@ -268,7 +271,6 @@ if st.button("🚀 Execute Hybrid Pipeline Optimization"):
         })
         st.table(metrics_comparison)
         
-        # NEW FEATURE: Dynamic Metric Error Bar Chart
         st.markdown("#### 📊 Comparative Error Bar Chart Analysis (Lower is Better)")
         chart_data = pd.DataFrame({
             "PSO-BPNN Model": [mae, rmse],
@@ -287,7 +289,6 @@ if st.button("🚀 Execute Hybrid Pipeline Optimization"):
     with tab3:
         st.markdown("#### 🗺️ High-Resolution System Engineering Process Flow Diagrams")
         
-        # Render flowcharts sequentially at full width to maximize visibility size scaling
         st.markdown("##### 1. End-to-End System Architecture Data Pipeline")
         st.graphviz_chart(generate_pipeline_flowchart(), use_container_width=True)
         
